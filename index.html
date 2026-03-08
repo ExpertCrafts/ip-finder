@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP F1ND</title>
     <style>
+        /* Global Reset for better sizing */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #0d1117;
             color: #58a6ff;
@@ -12,8 +17,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* Changed to min-height for better scrolling on small screens */
             margin: 0;
+            padding: 20px;
         }
 
         .container {
@@ -22,7 +28,8 @@
             border-radius: 8px;
             border: 1px solid #30363d;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            width: 400px;
+            width: 100%; /* Responsive width */
+            max-width: 400px; /* Limits size on desktop */
             text-align: center;
         }
 
@@ -31,17 +38,19 @@
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
+            font-size: 1.5rem;
         }
 
         input {
-            width: 80%;
-            padding: 10px;
+            width: 100%; /* Full width of container */
+            padding: 12px;
             background: #0d1117;
             border: 1px solid #30363d;
             color: #bc8cff;
             border-radius: 4px;
             margin-bottom: 1rem;
             outline: none;
+            font-size: 16px; /* Prevents auto-zoom on iOS */
         }
 
         input:focus {
@@ -49,26 +58,30 @@
         }
 
         button {
-            padding: 10px 20px;
+            width: 100%; /* Easier to tap on mobile */
+            padding: 12px 20px;
             background-color: #238636;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1rem;
             transition: background 0.2s;
         }
 
-        button:hover {
+        button:active {
             background-color: #2ea043;
+            transform: scale(0.98); /* Visual feedback for touch */
         }
 
         #result {
             margin-top: 1.5rem;
             padding: 10px;
-            min-height: 50px;
+            min-height: 60px;
             border-top: 1px solid #30363d;
             word-wrap: break-word;
+            font-size: 0.95rem;
         }
 
         .loading {
@@ -79,13 +92,23 @@
             color: #3fb950;
             font-weight: bold;
         }
+
+        /* Responsive adjustments for very small screens */
+        @media (max-width: 350px) {
+            .container {
+                padding: 1rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>IP F1NDER</h2>
-    <input type="text" id="targetName" placeholder="Enter username or hostname...">
+    <input type="text" id="targetName" placeholder="Enter username..." autocomplete="off">
     <br>
     <button onclick="findIP()">F1ND</button>
 
@@ -106,18 +129,17 @@
         const name = document.getElementById('targetName').value;
         const display = document.getElementById('result');
 
-        if (!name) {
+        if (!name.trim()) {
             display.innerHTML = "<span style='color: #f85149;'>Please enter a name!</span>";
             return;
         }
 
         display.innerHTML = "<span class='loading'>Bypassing firewalls...</span>";
         
-        // Add a fake delay for "realism"
         setTimeout(() => {
             const randomIP = fakeIPs[Math.floor(Math.random() * fakeIPs.length)];
             display.innerHTML = `
-                <div style="color: #8b949e; font-size: 0.8rem;">Target: ${name}</div>
+                <div style="color: #8b949e; font-size: 0.8rem; margin-bottom: 5px;">Target: ${name}</div>
                 <div class="success">IP FOUND: ${randomIP}</div>
             `;
         }, 1200);
