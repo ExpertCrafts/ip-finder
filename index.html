@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Lookup Tool</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #58a6ff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #161b22;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #f0f6fc;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: #bc8cff;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #58a6ff;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #2ea043;
+        }
+
+        #result {
+            margin-top: 1.5rem;
+            padding: 10px;
+            min-height: 50px;
+            border-top: 1px solid #30363d;
+            word-wrap: break-word;
+        }
+
+        .loading {
+            color: #d29922;
+        }
+
+        .success {
+            color: #3fb950;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>IP Resolver</h2>
+    <input type="text" id="targetName" placeholder="Enter username or hostname...">
+    <br>
+    <button onclick="findIP()">RESOLVE</button>
+
+    <div id="result">
+        Waiting for input...
+    </div>
+</div>
+
+<script>
+    // Generate 100 fake IPs
+    const fakeIPs = [];
+    for (let i = 0; i < 100; i++) {
+        const ip = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+        fakeIPs.push(ip);
+    }
+
+    function findIP() {
+        const name = document.getElementById('targetName').value;
+        const display = document.getElementById('result');
+
+        if (!name) {
+            display.innerHTML = "<span style='color: #f85149;'>Please enter a name!</span>";
+            return;
+        }
+
+        display.innerHTML = "<span class='loading'>Bypassing firewalls...</span>";
+        
+        // Add a fake delay for "realism"
+        setTimeout(() => {
+            const randomIP = fakeIPs[Math.floor(Math.random() * fakeIPs.length)];
+            display.innerHTML = `
+                <div style="color: #8b949e; font-size: 0.8rem;">Target: ${name}</div>
+                <div class="success">IP FOUND: ${randomIP}</div>
+            `;
+        }, 1200);
+    }
+</script>
+
+</body>
+</html>
